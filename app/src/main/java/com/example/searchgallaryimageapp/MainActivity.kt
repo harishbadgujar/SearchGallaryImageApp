@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     private fun setSearchItems() {
 
 
-       // Observable.create(ObservableOnSubscribe<String> { subscriber ->
             etSearch.addTextChangedListener(object : TextWatcher {
 
                 override fun beforeTextChanged(
@@ -48,7 +47,6 @@ class MainActivity : AppCompatActivity() {
                     count: Int,
                     after: Int
                 ) {
-                   // subscriber.onNext(s.toString())
                     searchImageViewmodel.serchFilter(s.toString()){
                         filterItems(it)
                     }
@@ -60,7 +58,6 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         ivClose.visibility = INVISIBLE
                     }
-                   // subscriber.onNext(s.toString())
                     searchImageViewmodel.serchFilter(s.toString()){
                         filterItems(it)
                     }
@@ -68,15 +65,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun afterTextChanged(s: Editable?) {}
             })
-      //  })
-            /*.map { text -> text.toLowerCase().trim() }
-            .debounce(5, TimeUnit.SECONDS)
-            .distinct()
-            .filter { text -> text.isNotBlank() }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { text ->
-                filterItems(text)
-            }*/
+
     }
 
     private fun filterItems(imgName: String) {
@@ -128,9 +117,6 @@ class MainActivity : AppCompatActivity() {
     private fun setUpdateImages(imageList: List<AddImageModal>) {
         progressBar.isVisible = false
         searchImageAdapter = SearchImageAdapter(imageList, MainActivity@ this, {
-
-            Log.d("onItemclick101", "you click image")
-
             ImageDialog.newInstance(it.id, it.link).show(supportFragmentManager, ImageDialog.TAG)
         })
 

@@ -34,7 +34,7 @@ class SearchImageViewModal : ViewModel() {
             subscribe.onNext(input)
         })
             .map { text -> text.lowercase(Locale.ENGLISH).trim() }
-            .debounce(5, TimeUnit.SECONDS)
+            .debounce(3, TimeUnit.SECONDS)
             .distinct()
             .filter { text -> text.isNotBlank() }
             .observeOn(AndroidSchedulers.mainThread())
