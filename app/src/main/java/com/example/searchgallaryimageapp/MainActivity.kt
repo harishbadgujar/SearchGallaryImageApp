@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.core.view.isVisible
@@ -14,12 +13,7 @@ import com.example.searchgallaryimageapp.adapter.SearchImageAdapter
 import com.example.searchgallaryimageapp.modal.AddImageModal
 import com.example.searchgallaryimageapp.ui.ImageDialog
 import com.example.searchgallaryimageapp.viewmodal.SearchImageViewModal
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
@@ -34,51 +28,49 @@ class MainActivity : AppCompatActivity() {
         setupViewModel()
         setupObservers()
         setSearchItems()
+        onClickIvClose()
+        setAdapter()
+    }
+
+    private fun setAdapter() {
+        searchImageAdapter = SearchImageAdapter(list, MainActivity@ this) {
+            ImageDialog.newInstance(it.id, it.link).show(supportFragmentManager, ImageDialog.TAG)
+        }
+        recyclerView.adapter = searchImageAdapter
+        recyclerView.layoutManager =
+            LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun setSearchItems() {
 
+        etSearch.addTextChangedListener(object : TextWatcher {
 
-            etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                    searchImageViewmodel.serchFilter(s.toString()){
-                        filterItems(it)
-                    }
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString().isNotEmpty()) {
+                    ivClose.visibility = VISIBLE
+                } else {
+                    ivClose.visibility = INVISIBLE
                 }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    if (s.toString().isNotEmpty()) {
-                        ivClose.visibility = VISIBLE
-                    } else {
-                        ivClose.visibility = INVISIBLE
-                    }
-                    searchImageViewmodel.serchFilter(s.toString()){
-                        filterItems(it)
-                    }
+                searchImageViewmodel.serchFilter(s.toString()) {
+                    filterItems(it)
                 }
+            }
 
-                override fun afterTextChanged(s: Editable?) {}
-            })
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
     }
 
     private fun filterItems(imgName: String) {
-
-        /* val filteredlist: ArrayList<AddImageModal> = ArrayList()
-          for(items in list){
-              if(items.id.toLowerCase().contains(imgName.toLowerCase())){
-                  filteredlist.add(items)
-                  setUpdateImages(filteredlist)
-              }
-
-          }*/
-
         val list: ArrayList<AddImageModal> = ArrayList()
         progressBar.isVisible = true
         searchImageViewmodel.searchImgLiveDataList.observe(this, androidx.lifecycle.Observer {
@@ -116,15 +108,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpdateImages(imageList: List<AddImageModal>) {
         progressBar.isVisible = false
-        searchImageAdapter = SearchImageAdapter(imageList, MainActivity@ this, {
-            ImageDialog.newInstance(it.id, it.link).show(supportFragmentManager, ImageDialog.TAG)
-        })
+        searchImageAdapter.updateList(imageList)
+    }
 
-        recyclerView.apply {
-            recyclerView.adapter = searchImageAdapter
-            recyclerView.layoutManager =
-                LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
-            searchImageAdapter.notifyDataSetChanged()
+    private fun onClickIvClose() {
+        ivClose.setOnClickListener {
+            etSearch.text?.clear()
         }
     }
 }

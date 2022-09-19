@@ -9,8 +9,6 @@ import retrofit2.http.Query
 
 interface SearchImageListner {
 
-    // use url :- https://api.imgur.com/3/gallery/search/?q=window
-
     @Headers("Authorization:Client-ID 4442d2bb442f675")
     @GET("?q=dogs")
     fun getMyImages(): Observable<ImageData>

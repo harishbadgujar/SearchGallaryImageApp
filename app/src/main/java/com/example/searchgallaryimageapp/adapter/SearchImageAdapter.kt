@@ -26,8 +26,6 @@ class SearchImageAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataModel = imageList.get(position)
-        //  holder.title.text = dataModel.id.toString()
-        //  holder.titleTextView.text = dataModel.title
 
         Glide.with(context)
             .load(dataModel?.link)
@@ -50,5 +48,10 @@ class SearchImageAdapter(
             ivImage = itemLayoutView.findViewById(R.id.imagephoto)
             title = itemLayoutView.findViewById(R.id.id_image)
         }
+    }
+
+    fun updateList(imgList: List<AddImageModal>) {
+        imageList = imgList
+        notifyDataSetChanged()
     }
 }
