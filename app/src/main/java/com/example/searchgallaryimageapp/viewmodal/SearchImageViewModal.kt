@@ -25,15 +25,12 @@ class SearchImageViewModal : ViewModel() {
     fun getAllImages() {
         val respImages: (List<Data>?) -> Unit = { s: List<Data>? -> photoLiveDataList.value = s }
         getImages(respImages)
-       // SearchImageRepository().imagesRepo(respImages)
-
     }
 
     fun searchImages(imgName: String) {
         val searchrespImages: (List<Data>?) -> Unit =
             { searchImg: List<Data>? -> searchImgLiveDataList.value = searchImg }
         getSearchImages(imgName, searchrespImages)
-       // SearchImageRepository().searchImageRepository(imgName, searchrespImages)
     }
 
     fun serchFilter(input: String, result: (String) -> Unit) {

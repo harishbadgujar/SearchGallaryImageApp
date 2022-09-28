@@ -6,44 +6,34 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        app:cardElevation="2dp"
-        app:cardMaxElevation="5dp"
+        android:layout_height="@dimen/dimen_200"
+        app:cardCornerRadius="@dimen/dimen_4"
+        app:cardElevation="@dimen/dimen_6"
+        app:cardMaxElevation="@dimen/dimen_5"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="@dimen/dimen_5">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imagephoto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_200"
                 android:src="@drawable/ic_launcher_background" />
 
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/id_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="0"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:visibility="gone"
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/image_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:padding="4dp"
+                android:layout_marginTop="@dimen/dimen_4"
+                android:padding="@dimen/dimen_4"
                 android:text="Title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="14dp" />
+                android:textSize="@dimen/dimen_14"
+                android:visibility="gone" />
 
         </LinearLayout>
 

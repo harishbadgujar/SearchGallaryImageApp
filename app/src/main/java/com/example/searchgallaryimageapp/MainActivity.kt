@@ -29,10 +29,10 @@ class MainActivity : AppCompatActivity() {
         setupObservers()
         setSearchItems()
         onClickIvClose()
-        setAdapter()
+        setupView()
     }
 
-    private fun setAdapter() {
+    private fun setupView() {
         searchImageAdapter = SearchImageAdapter(list, MainActivity@ this) {
             ImageDialog.newInstance(it.id, it.link).show(supportFragmentManager, ImageDialog.TAG)
         }

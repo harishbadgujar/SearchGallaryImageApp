@@ -35,18 +35,18 @@ class SearchImageAdapter(
             onItemClickListener(imageList[position])
         }
 
+       // holder.titleTextView.text = dataModel.id
+
     }
 
     class ViewHolder(itemLayoutView: View) : RecyclerView.ViewHolder(itemLayoutView) {
 
         var titleTextView: TextView
-        var title: TextView
         var ivImage: ImageView
 
         init {
             titleTextView = itemLayoutView.findViewById(R.id.image_title)
             ivImage = itemLayoutView.findViewById(R.id.imagephoto)
-            title = itemLayoutView.findViewById(R.id.id_image)
         }
     }
 
